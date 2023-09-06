@@ -7,13 +7,14 @@ import com.gama.gama.dto.ComentarioDTO;
 import com.gama.gama.entidades.Comentario;
 import com.gama.gama.entidades.Publicacion;
 import com.gama.gama.excepciones.ResourceNotFoundException;
+import com.gama.gama.repositorio.ComentarioRepositorio;
 import com.gama.gama.repositorio.PublicacionRepositorio;
 
 @Service
 public class ComentarioServicioImpl implements ComentarioServicio{
 
     @Autowired
-    private ComentarioServicioImpl comentarioRepositorio;
+    private ComentarioRepositorio comentarioRepositorio;
 
     @Autowired
     private PublicacionRepositorio publicacionRepositorio;
