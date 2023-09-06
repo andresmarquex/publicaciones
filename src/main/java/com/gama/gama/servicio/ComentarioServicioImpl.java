@@ -29,10 +29,6 @@ public class ComentarioServicioImpl implements ComentarioServicio{
         return mapearDTO(nuevoComentario);
     }
 
-    private Comentario save(Comentario comentario) {
-        return null;
-    }
-
     private ComentarioDTO mapearDTO(Comentario comentario){
         ComentarioDTO comentarioDTO= new ComentarioDTO();
         comentarioDTO.setId(comentario.getId());
