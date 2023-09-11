@@ -18,6 +18,8 @@ import com.gama.gama.dto.PublicacionRespuesta;
 import com.gama.gama.servicio.PublicacionServicio;
 import com.gama.gama.utilerias.AppConstantes;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/publicaciones")
 public class PublicacionControlador {
@@ -40,12 +42,12 @@ public class PublicacionControlador {
     }
 
     @PostMapping
-    private ResponseEntity<PublicacionDTO> guardarPublicacion(@RequestBody PublicacionDTO publicacionDTO){
+    private ResponseEntity<PublicacionDTO> guardarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO){
         return new ResponseEntity<>(publicacionServicio.crearPublicacion(publicacionDTO),HttpStatus.CREATED);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<PublicacionDTO> actualizarPublicacionPorId(@RequestBody PublicacionDTO publicacionDTO, @PathVariable(name="id") long id){
+    public ResponseEntity<PublicacionDTO> actualizarPublicacionPorId(@Valid @RequestBody PublicacionDTO publicacionDTO, @PathVariable(name="id") long id){
         PublicacionDTO publicacionRespuesta = publicacionServicio.actualizarPublicacion(publicacionDTO, id);
         return new ResponseEntity<>(publicacionRespuesta, HttpStatus.OK);
     }

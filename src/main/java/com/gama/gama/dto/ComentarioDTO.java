@@ -1,9 +1,23 @@
 package com.gama.gama.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class ComentarioDTO {
+
+    
     private long id;
+
+    @NotEmpty(message = "El nombre no debe ser vacio o nulo")
     private String nombre;
+
+    @NotEmpty(message = "El email no debe ser vacio o nulo")
+    @Email
     private String email;
+
+    @NotEmpty
+    @Size(min=10, message="El cuerpo del comentario debe tener mas de 10 caracteres.")
     private String cuerpo;
     
     public ComentarioDTO() {

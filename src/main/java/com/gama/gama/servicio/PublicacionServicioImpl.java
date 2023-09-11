@@ -3,6 +3,7 @@ package com.gama.gama.servicio;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,9 @@ import com.gama.gama.repositorio.PublicacionRepositorio;
 
 @Service
 public class PublicacionServicioImpl implements PublicacionServicio{
+
+    @Autowired
+    private ModelMapper modelMapper;
     
     @Autowired
     private PublicacionRepositorio publicacionRepositorio;
@@ -56,28 +60,8 @@ public class PublicacionServicioImpl implements PublicacionServicio{
     }
 
     private PublicacionDTO mapearDTO(Publicacion publicacion){
-        PublicacionDTO publicacionDTO = new PublicacionDTO();
-        publicacionDTO.setId(publicacion.getId());
-        publicacionDTO.setTitulo(publicacion.getTitulo());
-        publicacionDTO.setDescripcion(publicacion.getDescripcion());
-        publicacionDTO.setContenido(publicacion.getContenido());
-
+        PublicacionDTO publicacionDTO = modelMapper.map(publicacion, PublicacionDTO.class);
         return publicacionDTO;
-    }
-
-    private Publicacion mapearEntidad(PublicacionDTO publicacionDTO){
-        Publicacion publicacion = new Publicacion();
-        publicacion.setTitulo(publicacionDTO.getTitulo());
-        publicacion.setDescripcion(publicacionDTO.getDescripcion());
-        publicacion.setContenido(publicacionDTO.getContenido());
-
-        return publicacion;
-    }
-
-    @Override
-    public PublicacionDTO obtenerPublicacionPorId(long id){
-        Publicacion publicacion = publicacionRepositorio.findById(id).orElseThrow(()-> new ResourceNotFoundException("Publicacion","id",id));
-        return mapearDTO(publicacion);
     }
 
     @Override
@@ -95,5 +79,16 @@ public class PublicacionServicioImpl implements PublicacionServicio{
     public void eliminarPublicacion(long id){
         Publicacion publicacion = publicacionRepositorio.findById(id).orElseThrow(()-> new ResourceNotFoundException("Publicacion","id",id));
         publicacionRepositorio.delete(publicacion);
+    }
+
+    private Publicacion mapearEntidad(PublicacionDTO publicacionDTO){
+        Publicacion publicacion = modelMapper.map(publicacionDTO, Publicacion.class);
+        return publicacion;
+    }
+
+    @Override
+    public PublicacionDTO obtenerPublicacionPorId(long id){
+        Publicacion publicacion = publicacionRepositorio.findById(id).orElseThrow(()-> new ResourceNotFoundException("Publicacion","id",id));
+        return mapearDTO(publicacion);
     }
 }

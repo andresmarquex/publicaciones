@@ -3,6 +3,8 @@ package com.gama.gama.entidades;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +31,7 @@ public class Publicacion {
     @Column(name = "contenido", nullable = false)
     private String contenido;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Comentario> comentarios = new HashSet<>();
 
@@ -73,4 +76,14 @@ public class Publicacion {
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
+
+    public Set<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(Set<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    
 }
